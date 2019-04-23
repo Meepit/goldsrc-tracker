@@ -1,0 +1,72 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Goldsrc Tracker</title>
+  </head>
+  <body>
+    <div class="container" style="padding-left: calc(100vw - 100%);">
+        <div class="row">
+            <div class="col-md">
+
+
+            <div class="jumbotron">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1>Goldsource Tracker</h1>
+                            <p class="lead">Setup alerts for when your favourite goldsrc games hit a specified player threshold.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="https://media.giphy.com/media/i4JRIVVNpPhWo/giphy.gif" style="height: 300px"/>
+                        </div>
+                    </div>
+                  </div>
+            </div>
+
+            <form>
+                <table class="table table-sm">
+                  <thead>
+                    <tr>
+                      <th scope="col">Game</th>
+                      <th scope="col">Player Count</th>
+                      <th scope="col">Action(s)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for item in counts %}
+                    <tr>
+                    <td>{{item.name}}</td>
+                    <td>{{item.playerCount}}</td>
+                    <td>
+                        <a href="steam://rungame/{{item.id}}/76561202255233023" class="btn btn-success"><span class="glyphicon glyphicon-edit"></span>Start</a>
+                        <a href="#" class="btn btn-primary" data-toggle="collapse" data-target="#input{{item.id}}"><span class="glyphicon glyphicon-edit"></span>Setup Alert</a>
+          
+                        <div class="collapse" id="input{{item.id}}">
+                            <label for="input{{item.id}}-label" class="col-sm-2 col-form-label col-form-label-sm">Threshold:</label>
+                            <input class="form-control" id="input{{item.id}}-label" type="text" placeholder="50" style="width:100px">
+                        </div>
+                    </td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+            </form>
+
+          </div>
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
