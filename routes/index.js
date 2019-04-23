@@ -1,17 +1,15 @@
 var express = require('express');
 var router = express.Router();
-var axios  = require('axios');
-const { gamesList } = require('../config/gamesList')
+const { gamesList } = require('../config/gamesList');
+const { getAsync } = require('../lib/db');
 
 /* GET home page. */
 
-async function getPlayerCounts() {
-    const url = 'https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid='
+async function getPlayerCountsDb() {
     for await (const game of gamesList) {
         try {
-            const data = await axios.get(`${url}${game.id}`);
-            console.log(data.data)
-            game.playerCount = data.data.response.player_count;
+            const count = await getAsync(`${game.id}`) || 'N/A';
+            game.playerCount = count;
         } catch (err) {
             game.playerCount = -1
         }
@@ -20,7 +18,7 @@ async function getPlayerCounts() {
 }
 
 router.get('/', async (req, res, next) => {
-    const counts  = await getPlayerCounts();
+    const counts  = await getPlayerCountsDb();
     res.render('index', { title: 'Express', counts });
 });
 

@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+const config = require('./config/environment');
 
 var app = express();
 var nunjucks  = require('nunjucks');
