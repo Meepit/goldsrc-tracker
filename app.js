@@ -9,7 +9,10 @@ const passport = require('passport');
 const SteamStrategy = require('passport-steam').Strategy;
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var loginRouter = require('./routes/login');
+const authRouter = require('./routes/auth');
+const logoutRouter = require('./routes/logout');
+
 const config = require('./config/environment');
 const redis = require('./lib/db').redisClient;
 
@@ -34,7 +37,6 @@ passport.use(new SteamStrategy({
   function(identifier, profile, done) {
     // asynchronous verification, for effect...
     process.nextTick(function () {
-
       // To keep the example simple, the user's Steam profile is returned to
       // represent the logged-in user.  In a typical application, you would want
       // to associate the Steam account with a user record in your database,
@@ -68,7 +70,9 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/login', loginRouter);
+app.use('/logout', logoutRouter);
+app.use('/auth/steam', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -80,7 +84,6 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
   // render the error page
   res.status(err.status || 500);
   res.render('error');

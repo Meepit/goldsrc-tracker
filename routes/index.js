@@ -4,8 +4,6 @@ const passport = require('passport');
 const { gamesList } = require('../config/gamesList');
 const { getAsync } = require('../lib/db');
 
-/* GET home page. */
-
 async function getPlayerCountsDb() {
     for await (const game of gamesList) {
         try {
@@ -18,7 +16,8 @@ async function getPlayerCountsDb() {
     return gamesList
 }
 
-router.get('/', passport.authenticate('steam'), async (req, res, next) => {
+router.get('/', async (req, res, next) => {
+    res.locals.user = req.user || null;
     const counts  = await getPlayerCountsDb();
     res.render('index', { title: 'Express', counts });
 });
