@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const passport = require('passport');
 const { gamesList } = require('../config/gamesList');
 const { getAsync } = require('../lib/db');
 
@@ -17,7 +18,7 @@ async function getPlayerCountsDb() {
     return gamesList
 }
 
-router.get('/', async (req, res, next) => {
+router.get('/', passport.authenticate('steam'), async (req, res, next) => {
     const counts  = await getPlayerCountsDb();
     res.render('index', { title: 'Express', counts });
 });
