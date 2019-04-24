@@ -7,58 +7,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="stylesheets/style.css">
 
     <title>Goldsrc Tracker</title>
   </head>
   <body>
+
+
     <div class="container" style="padding-left: calc(100vw - 100%);">
         <div class="row">
             <div class="col-md">
 
-
-            <div class="jumbotron">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h1>Goldsource Tracker</h1>
-                            <p class="lead">Setup alerts for when your favourite goldsrc games hit a specified player threshold.</p>
-                        </div>
-                        <div class="col-md-6">
-                            <img src="https://media.giphy.com/media/i4JRIVVNpPhWo/giphy.gif" style="height: 300px"/>
-                        </div>
-                    </div>
+              <nav class="navbar navbar-expand-lg navbar-dark bg-primary ht-tm-element ml-auto">
+                  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <a class="navbar-brand" href="#!">Navbar</a>
+            
+                  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                    <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+                      <li class="nav-item active">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                      </li>
+                      <li class="nav-item">
+                        {% if user %}
+                        <a class="nav-link" href="/logout">Logout</a>
+                        {% else %}
+                        <a class="nav-link" href="/login">Login</a>
+                        {% endif %}
+                      </li>
+                    </ul>
                   </div>
-            </div>
+                </nav>
 
-            <form>
-                <table class="table table-sm">
-                  <thead>
-                    <tr>
-                      <th scope="col">Game</th>
-                      <th scope="col">Player Count</th>
-                      <th scope="col">Action(s)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  {% for item in counts %}
-                    <tr>
-                    <td>{{item.name}}</td>
-                    <td>{{item.playerCount}}</td>
-                    <td>
-                        <a href="steam://rungame/{{item.id}}/76561202255233023" class="btn btn-success"><span class="glyphicon glyphicon-edit"></span>Start</a>
-                        <a href="#" class="btn btn-primary" data-toggle="collapse" data-target="#input{{item.id}}"><span class="glyphicon glyphicon-edit"></span>Setup Alert</a>
-          
-                        <div class="collapse" id="input{{item.id}}">
-                            <label for="input{{item.id}}-label" class="col-sm-2 col-form-label col-form-label-sm">Threshold:</label>
-                            <input class="form-control" id="input{{item.id}}-label" type="text" placeholder="50" style="width:100px">
+                <div class="jumbotron">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h1>Goldsource Tracker</h1>
+                                <p class="lead">Setup alerts for when your favourite goldsrc games hit a specified player threshold.</p>
+                                <p>Login to setup alerts</p>
+                                <a href="/login"><img src="https://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_02.png"></a>
+                            </div>
+                            <div class="col-md-6">
+                                <img src="https://media.giphy.com/media/i4JRIVVNpPhWo/giphy.gif" style="height: 300px"/>
+                            </div>
                         </div>
-                    </td>
-                    </tr>
-                  {% endfor %}
-                  </tbody>
-                </table>
-            </form>
+                      </div>
+                </div>
+
+                <form>
+                    <table class="table table-hover table-primary ht-tm-element table-sm">
+                      <thead>
+                        <tr>
+                          <th scope="col">Game</th>
+                          <th scope="col">Player Count</th>
+                          {% if user %}
+                          <th scope="col" style="text-align: right;">Action(s)</th>
+                          {% endif %}
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for item in counts %}
+                        <tr>
+                        <td>{{item.name}}</td>
+                        <td>{{item.playerCount}}</td>
+                        {% if user %}
+                        <td style="text-align: right">
+                            <a href="steam://rungame/{{item.id}}/76561202255233023" class="btn btn-success"><span class="glyphicon glyphicon-edit"></span>Start</a>
+                            <a href="#" class="btn btn-primary" data-toggle="collapse" data-target="#input{{item.id}}"><span class="glyphicon glyphicon-edit"></span>Setup Alert</a>
+
+                            <div class="collapse" id="input{{item.id}}">
+                                <div style="float: right; margin-top: 0.5em">
+                                    <p>Alert when the following player count is reached:</p>
+                                    <!-- <label for="input{{item.id}}-label">Alert when the following player count is reached:</label> -->
+                                    <input class="form-control" id="input{{item.id}}-label" type="text" placeholder="50" style="width:100px; float: right;">
+                                    <button type="submit" class="ht-tm-element btn btn-success">Set</button>
+                                    <button type="submit" class="ht-tm-element btn btn-danger">Clear</button>
+                                </div>
+                            </div>             
+                        </td>
+                        {% endif %}
+                        </tr>
+                      {% endfor %}
+                      </tbody>
+                    </table>
+                </form>
 
           </div>
         </div>
