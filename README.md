@@ -1,3 +1,4 @@
+![Build Status](https://travis-ci.org/Meepit/goldsrc-tracker.svg?branch=master)
 # Goldsrc-Tracker
 
 Tracks player counts on various goldsrc games / mods on steam and allows the setting of custom alerts when specified player thresholds are met.
