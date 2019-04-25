@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const passport = require('passport');
 const { gamesList } = require('../config/gamesList');
-const { getAsync } = require('../lib/db');
+const { getAsync } = require('../lib/redis-client');
 
 async function getPlayerCountsDb() {
     for await (const game of gamesList) {

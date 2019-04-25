@@ -14,7 +14,7 @@ const authRouter = require('./routes/auth');
 const logoutRouter = require('./routes/logout');
 
 const config = require('./config/environment');
-const redis = require('./lib/db').redisClient;
+const redis = require('./lib/redis-client').redisClient;
 
 
 var app = express();
