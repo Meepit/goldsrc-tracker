@@ -1,5 +1,5 @@
-require('dotenv').config();
-const config = require('./environment')
+require("dotenv").config();
+const config = require("./environment")
 
 module.exports = {
   "development": {
