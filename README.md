@@ -1,6 +1,8 @@
 ![Build Status](https://travis-ci.org/Meepit/goldsrc-tracker.svg?branch=master)
 # Goldsrc-Tracker
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7a102c8ebfda4a05a7ad38def506e1ac)](https://app.codacy.com/app/Meepit/goldsrc-tracker?utm_source=github.com&utm_medium=referral&utm_content=Meepit/goldsrc-tracker&utm_campaign=Badge_Grade_Dashboard)
+
 Tracks player counts on various goldsrc games / mods on steam and allows the setting of custom alerts when specified player thresholds are met.
 
 ## Configuration 
