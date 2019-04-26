@@ -1,13 +1,13 @@
-var express = require('express');
-var router = express.Router();
-const passport = require('passport');
-const { gamesList } = require('../config/gamesList');
-const { getAsync } = require('../lib/redis-client');
+const express = require("express");
+const router = express.Router();
+const passport = require("passport");
+const { gamesList } = require("../config/gamesList");
+const { getAsync } = require("../lib/redis-client");
 
 async function getPlayerCountsDb() {
     for await (const game of gamesList) {
         try {
-            const count = await getAsync(`${game.id}`) || 'N/A';
+            const count = await getAsync(`${game.id}`) || "N/A";
             game.playerCount = count;
         } catch (err) {
             game.playerCount = -1
@@ -16,10 +16,10 @@ async function getPlayerCountsDb() {
     return gamesList
 }
 
-router.get('/', async (req, res, next) => {
+router.get("/", async (req, res, next) => {
     res.locals.user = req.user || null;
     const counts  = await getPlayerCountsDb();
-    res.render('index', { title: 'Express', counts });
+    res.render("index", { title: "Express", counts });
 });
 
 module.exports = router;
