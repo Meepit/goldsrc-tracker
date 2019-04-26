@@ -1,15 +1,15 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const passport = require('passport');
 const SteamStrategy = require('passport-steam').Strategy;
 
-var indexRouter = require('./routes/index');
-var loginRouter = require('./routes/login');
+const indexRouter = require('./routes/index');
+const loginRouter = require('./routes/login');
 const authRouter = require('./routes/auth');
 const logoutRouter = require('./routes/logout');
 
@@ -17,8 +17,8 @@ const config = require('./config/environment');
 const redis = require('./lib/redis-client').redisClient;
 
 
-var app = express();
-var nunjucks  = require('nunjucks');
+const app = express();
+const nunjucks  = require('nunjucks');
 
 // Passport session setup
 passport.serializeUser(function(user, done) {
