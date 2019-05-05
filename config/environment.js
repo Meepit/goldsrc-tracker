@@ -5,3 +5,4 @@ exports.STEAM_API_KEY = process.env.STEAM_API_KEY
 exports.DB_USER = process.env.DB_USER || "postgres";
 exports.DB_NAME = process.env.DB_NAME || "postgres";
 exports.DB_HOST = process.env.DB_HOST || "127.0.0.1";
+exports.BASE_URL = process.env.BASE_URL || "http://localhost:3000";

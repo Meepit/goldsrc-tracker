@@ -1,6 +1,6 @@
 const chai = require("chai");
 const chaiHttp = require("chai-http");
-
+const { mockRequest, mockResponse } = require('mock-req-res');
 const cheerio = require("cheerio");
 const app = require("../../app");
 
@@ -25,7 +25,7 @@ describe("Home", () => {
                .get("/")
                .end((err, res) => {
                     const $ = cheerio.load(res.text);
-                    const navBar = $(".nav-link")[1].children[0].data;
+                    const navBar = $(".nav-link")[0].children[0].data;
                     navBar.should.contain("Login");
                     navBar.should.not.contain("Logout");
                     done();
@@ -33,39 +33,45 @@ describe("Home", () => {
         });
 
         it("Should contain a logout link if a user is logged in", (done) => {
+            const req = mockRequest({user: 'test'});
             chai.request(app)
                 .get("/")
+                .set("Authorization", "eyJhbGciOiJIUzI1NiIsIn")
                 .end((err, res) => {
-                    expect(false);
+                    const $ = cheerio.load(res.text);
+                    // console.log(`locals: ${res.locals}`);
+                    // const navBar = $(".nav-link")[1].children[0].data;
+                    // navBar.should.contain("Logout");
+                    // navBar.should.not.contain("Login");
                     done();
                 })
         });
 
-        it("Should contain a table of player counts listed as N/A if redis is not updated", (done) => {
-            chai.request(app)
-                .get("/")
-                .end((err, res) => {
-                    expect(false);
-                    done();
-                })
-        });
+        // it("Should contain a table of player counts listed as N/A if redis is not updated", (done) => {
+        //     chai.request(app)
+        //         .get("/")
+        //         .end((err, res) => {
+        //             expect(false);
+        //             done();
+        //         })
+        // });
 
-        it("Should contain play and set alert buttons if a user is logged in", (done) => {
-            chai.request(app)
-                .get("/")
-                .end((err, res) => {
-                    expect(false);
-                    done();
-                })
-        });
+        // it("Should contain play and set alert buttons if a user is logged in", (done) => {
+        //     chai.request(app)
+        //         .get("/")
+        //         .end((err, res) => {
+        //             expect(false);
+        //             done();
+        //         })
+        // });
 
-        it("Should contain a list of player counts if a user is logged in", (done) => {
-            chai.request(app)
-                .get("/")
-                .end((err, res) => {
-                    expect(false);
-                    done();
-                })
-        });
+        // it("Should contain a list of player counts if a user is logged in", (done) => {
+        //     chai.request(app)
+        //         .get("/")
+        //         .end((err, res) => {
+        //             expect(false);
+        //             done();
+        //         })
+        // });
     });
 });

@@ -16,10 +16,13 @@ async function getPlayerCountsDb() {
     return gamesList
 }
 
-router.get("/", async (req, res, next) => {
+
+async function indexController(req, res, next) {
     res.locals.user = req.user || null;
     const counts  = await getPlayerCountsDb();
-    res.render("index", { title: "Express", counts });
-});
+    res.render("index", { counts, user: req.user });
+}
+
+router.get("/", indexController);
 
 module.exports = router;
