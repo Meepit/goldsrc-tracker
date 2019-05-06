@@ -65,7 +65,7 @@
                       </div>
                 </div>
 
-                <form>
+                <form method="POST">
                     <table class="table table-hover table-primary ht-tm-element table-sm">
                       <thead>
                         <tr>
@@ -90,7 +90,7 @@
                                 <div style="float: right; margin-top: 0.5em">
                                     <p>Alert when the following player count is reached:</p>
                                     <!-- <label for="input{{item.id}}-label">Alert when the following player count is reached:</label> -->
-                                    <input class="form-control" id="input{{item.id}}-label" type="text" placeholder="50" style="width:100px; float: right;">
+                                    <input class="form-control" id="input{{item.id}}-label" type="text" placeholder="50" style="width:100px; float: right;" name="{{item.id}}">
                                     <button type="submit" class="ht-tm-element btn btn-success">Set</button>
                                     <button type="submit" class="ht-tm-element btn btn-danger">Clear</button>
                                 </div>
