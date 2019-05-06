@@ -7,6 +7,7 @@ const session = require("express-session");
 const RedisStore = require("connect-redis")(session);
 const passport = require("passport");
 const SteamStrategy = require("passport-steam").Strategy;
+const appLogger = require("./lib/logger");
 
 const indexRouter = require("./routes/index");
 const loginRouter = require("./routes/login");
@@ -15,6 +16,7 @@ const logoutRouter = require("./routes/logout");
 
 const config = require("./config/environment");
 const redis = require("./lib/redis-client").redisClient;
+const db = require("./models/index");
 
 
 const app = express();
@@ -30,20 +32,32 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new SteamStrategy({
-  returnURL: "http://localhost:3000/auth/steam/return",
-  realm: "http://localhost:3000/",
+  returnURL: `${config.BASE_URL}/auth/steam/return`,
+  realm: `${config.BASE_URL}`,
   apiKey: config.STEAM_API_KEY,
   },
-  function(identifier, profile, done) {
-    // asynchronous verification, for effect...
-    process.nextTick(function () {
-      // To keep the example simple, the user"s Steam profile is returned to
-      // represent the logged-in user.  In a typical application, you would want
-      // to associate the Steam account with a user record in your database,
-      // and return that user instead.
+  async function(identifier, profile, done) {
+    try{
       profile.identifier = identifier;
-      return done(null, profile);
-    });
+      let user = await db.User.findOne({ where: { steamid: profile.id }});
+      if (!user) {
+        appLogger.info(`User does not exist, creating entry for: ${profile.id}`);
+        user = await db.User.create({
+          steamid: profile.id,
+          username: profile.displayName,
+          avatar: profile.photos[1].value,
+        });
+      } else {
+        appLogger.info("User already exists");
+        user.username = profile.displayName;
+        user.avatar = profile.photos[1].value;
+        user = await user.save();
+      }
+      return done(null, user);
+    } catch (err) {
+      logger.info(`Passport strategy failed: ${err}`);
+      return done(null, {});
+    }
   }
 ));
 
