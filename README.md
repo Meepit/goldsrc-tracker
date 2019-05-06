@@ -15,6 +15,7 @@ The majority of environment variables have defaults, these can be changed if req
 |DB_USER       | Postgres username        | postgres  |
 |DB_NAME       | Postgres database name   | postgres  |
 |DB_HOST       | Postgres database host   | 127.0.0.1 |
+|BASE_URL      | Application base url     | http://localhost:3000 |
 
 ## Usage
 
