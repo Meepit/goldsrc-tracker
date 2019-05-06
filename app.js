@@ -37,23 +37,27 @@ passport.use(new SteamStrategy({
   apiKey: config.STEAM_API_KEY,
   },
   async function(identifier, profile, done) {
-    // asynchronous verification, for effect...
-    process.nextTick(async function () {
+    try{
       profile.identifier = identifier;
-      const user = await db.User.findOne({ where: { steamid: profile.id }});
+      let user = await db.User.findOne({ where: { steamid: profile.id }});
       if (!user) {
         appLogger.info(`User does not exist, creating entry for: ${profile.id}`);
-        const user = await db.User.create({
+        user = await db.User.create({
           steamid: profile.id,
           username: profile.displayName,
           avatar: profile.photos[1].value,
         });
       } else {
-        appLogger.info('User already exists');
-        // Update user object with new name / profile
+        appLogger.info("User already exists");
+        user.username = profile.displayName;
+        user.avatar = profile.photos[1].value;
+        user = await user.save();
       }
       return done(null, user);
-    });
+    } catch (err) {
+      logger.info(`Passport strategy failed: ${err}`);
+      return done(null, {});
+    }
   }
 ));
 
